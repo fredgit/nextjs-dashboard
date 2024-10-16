@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 "use server";
 import { z } from "zod";
 import { sql } from "@vercel/postgres";
@@ -54,7 +56,7 @@ export async function createInvoice(prevState: State, formData: FormData) {
         INSERT INTO invoices (customer_id, amount, status, date)
         VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
       `;
-  } catch (error) {
+  } catch ( error ) {
     return { message: "An error occurred while creating the invoice" };
   }
 
@@ -77,7 +79,7 @@ export async function updateInvoice(id: string, formData: FormData) {
         SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
         WHERE id = ${id}
       `;
-  } catch (error) {
+  } catch ( error ) {
     return { message: "An error occurred while updating the invoice" };
   }
 
@@ -85,14 +87,12 @@ export async function updateInvoice(id: string, formData: FormData) {
   redirect("/dashboard/invoices");
 }
 
-export async function deleteInvoice(id: string) {
-  throw new Error("Failed to Delete Invoice");
-  
+export async function deleteInvoice(id: string) {  
   try {
     await sql`DELETE FROM invoices WHERE id = ${id}`;
     revalidatePath("/dashboard/invoices");
     return { message: "Deleted Invoice." };
-  } catch (error) {
+  } catch ( error ) {
     return { message: "An error occurred while deleting the invoice" };
   }
 }
